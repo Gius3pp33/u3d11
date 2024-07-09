@@ -1,20 +1,21 @@
 import { Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaHeart,FaTrash } from 'react-icons/fa';
+import { FaHeart, FaTrash } from 'react-icons/fa';
+import { addFavourite, removeFavourite } from '../redux/actions';
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
-  const favourites = useSelector((state) => state.favourites);
+  const favourites = useSelector((state) => state.favourites.content);
 
   const isFavourite = favourites.includes(data.company_name);
 
   const handleAddFavourite = () => {
-    dispatch({ type: "ADD_FAVOURITE", payload: data.company_name });
+    dispatch(addFavourite(data.company_name));
   };
 
   const handleRemoveFavourite = () => {
-    dispatch({ type: "REMOVE_FAVOURITE", payload: data.company_name });
+    dispatch(removeFavourite(data.company_name));
   };
 
   return (
@@ -29,15 +30,17 @@ const Job = ({ data }) => {
       </Col>
       <Col xs={3}>
         {isFavourite ? (
-          <Button variant='danger' onClick={handleRemoveFavourite}>  <FaTrash /> </Button>
+          <Button variant='danger' onClick={handleRemoveFavourite}>
+            <FaTrash />
+          </Button>
         ) : (
-          <Button  onClick={handleAddFavourite}><FaHeart/></Button>
+          <Button onClick={handleAddFavourite}>
+            <FaHeart />
+          </Button>
         )}
       </Col>
     </Row>
   );
 };
-
-
 
 export default Job;

@@ -1,32 +1,46 @@
 const initialState = {
-  favourites: [],
-  jobs:[],
+  favourites: {
+    content: [],
+  },
+  jobs: {
+    content: [],
+  },
 };
 
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_JOBS":
+      return {
+        ...state,
+        jobs: {
+          ...state.jobs,
+          content: action.payload,
+        },
+      };
+
     case "ADD_FAVOURITE":
       return {
         ...state,
-        favourites: state.favourites.includes(action.payload)
-          ? state.favourites
-          : [...state.favourites, action.payload],
+        favourites: {
+          ...state.favourites,
+          content: state.favourites.content.includes(action.payload)
+            ? state.favourites.content
+            : [...state.favourites.content, action.payload],
+        },
       };
 
     case "REMOVE_FAVOURITE":
       return {
         ...state,
-        favourites: state.favourites.filter(
-          (company) => company !== action.payload
-        ),
+        favourites: {
+          ...state.favourites,
+          content: state.favourites.content.filter(
+            (company) => company !== action.payload
+          ),
+        },
       };
-      case "SET_JOBS":
-        return {
-          ...state,
-          jobs: action.payload,
-        };
-    
-        default:
+
+    default:
       return state;
   }
 };
