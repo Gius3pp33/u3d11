@@ -1,5 +1,6 @@
 const initialState = {
   favourites: [],
+  jobs:[],
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -19,8 +20,13 @@ const mainReducer = (state = initialState, action) => {
           (company) => company !== action.payload
         ),
       };
-
-    default:
+      case "SET_JOBS":
+        return {
+          ...state,
+          jobs: action.payload,
+        };
+    
+        default:
       return state;
   }
 };
